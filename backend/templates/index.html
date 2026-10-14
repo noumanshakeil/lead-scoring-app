@@ -1,53 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{{ title }}</title>
-  <link rel="stylesheet" href="/static/styles.css" />
-</head>
-<body>
-  <main>
-    <h1>{{ title }}</h1>
-    <p class="sub">{{ description }} · LLM <span class="pill">{{ llm_mode }}</span></p>
-    <div class="grid">
-      <section class="card">
-        <h2>Create lead</h2>
-        <form method="post" action="/ui/create">
-        <label>email</label><input name="email" placeholder="email" required />
-<label>company_size</label><input name="company_size" placeholder="company_size" required />
-<label>intent</label><input name="intent" placeholder="intent" required />
-          <button type="submit">Save</button>
-        </form>
-        <h2 style="margin-top:1.25rem">AI action: {{ action }}</h2>
-        <p class="sub">{{ action_desc }}</p>
-        <form method="post" action="/ui/action">
-          <label>prompt</label>
-          <textarea name="prompt" rows="4" placeholder="Describe what you need..."></textarea>
-          <button type="submit">Run {{ action }}</button>
-        </form>
-        {% if last_result %}
-        <h3>Last result</h3>
-        <pre>{{ last_result }}</pre>
-        {% endif %}
-      </section>
-      <section class="card">
-        <h2>{{ resource }} ({{ items|length }})</h2>
-        <table>
-          <thead><tr><th>id</th><th>data</th></tr></thead>
-          <tbody>
-          {% for item in items %}
-            <tr>
-              <td>{{ item.id }}</td>
-              <td><code>{{ item }}</code></td>
-            </tr>
-          {% else %}
-            <tr><td colspan="2">No items yet</td></tr>
-          {% endfor %}
-          </tbody>
-        </table>
-      </section>
-    </div>
-  </main>
-</body>
-</html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>{{ title }}</title><link rel="stylesheet" href="/static/styles.css"/></head><body><main>
+<h1>{{ title }}</h1><p class="sub">Score leads with title/company rules + LLM boost.</p>
+<div class="grid"><section class="card">
+<form method="post" action="/ui/leads"><label>Email</label><input name="email" required/>
+<label>Company</label><input name="company"/><label>Title</label><input name="title"/>
+<label>Notes</label><textarea name="notes" rows="3"></textarea><button type="submit">Score</button></form>
+</section><section class="card"><h2>Queue</h2>
+{% for l in leads %}<div><span class="pill">{{ l.band }}</span> <span class="pill">{{ l.score }}</span> {{ l.email }} · {{ l.title }} @ {{ l.company }}</div>{% endfor %}
+</section></div></main></body></html>

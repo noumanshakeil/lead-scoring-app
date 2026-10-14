@@ -1,0 +1,13 @@
+[project]
+name = "lead-scoring-app"
+version = "2.0.0"
+description = "Score inbound leads with rule + LLM signals, thresholds, and a review queue."
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
